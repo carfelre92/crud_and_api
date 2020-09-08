@@ -1,0 +1,78 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css';
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css';
+*{
+  margin:0;
+  padding:0;
+  list-style-type: none;
+  box-sizing:border-box;
+}
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
+/*stacking views*/
+.app{
+  max-width: 30em;
+  margin:auto;
+  position: relative;
+}
+
+.view{
+  min-height: 100vh;
+  /*display: none !important;*/
+}
+
+/*.active{
+  display: flex !important;
+}
+*/
+
+/*layout in each view*/
+.view{
+  display: flex;
+  flex-direction:column;
+
+}
+
+.header{
+  text-align: right;
+  padding:1em;
+}
+
+.main{
+  flex: 1 0 auto;
+  padding:1em;
+}
+
+/*nav*/
+
+.menu a{
+  display: block;
+  padding:1em;
+  border-bottom:thin #ccc dotted;
+  color:black;
+  text-decoration:none;
+}
+
+/*header */
+.header i{
+  margin-left:1em;
+}
+
+/*projects*/
+.project{
+  margin-bottom: 1em;
+}
+
+.project i{
+  margin-right:1em;
+}
+
+/* Color Theme Swatches in RGBA */
+.color0{ background-color: rgba(200, 200, 200, 1); }
+.color1{ background-color: rgba(201, 255, 245, 1); }
+.color2{ background-color: rgba(183, 232, 209, 1); }
+.color3{ background-color: rgba(214, 255, 224, 1); }
+.color4{ background-color: rgba(185, 232, 183, 1); }
+.color5{ background-color: rgba(222, 255, 201, 1); }
