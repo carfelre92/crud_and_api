@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
+import apiInfo from './apiInfo';
 
 class  Project extends Component {
 
 	handleUpdateClick = () => {
 		var {setActiveView,setProjectToUpdate,id} = this.props
 		setProjectToUpdate(id)
-		console.log(id)
 		setActiveView('update-project')
+		console.log(id)
 	}
 
 	handleTrashClick = () => {
-		var {deleteProject,id} = this.props;
-		deleteProject(id)
+		var {id,listProjects} = this.props;
+		apiInfo.deleteProject(id);
+		listProjects();
 	}
 
   	render(){

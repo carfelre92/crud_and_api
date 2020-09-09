@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import apiInfo from './apiInfo';
 
 class  UpdateProjectForm extends Component {
 
@@ -6,6 +7,8 @@ class  UpdateProjectForm extends Component {
 		super(props);
 
 	}
+
+	update
 
 	handleFormSubmit = (e) => {
 		e.preventDefault();
@@ -16,10 +19,9 @@ class  UpdateProjectForm extends Component {
 			description:formData.get('description-input'),
 			type_id:formData.get('type-input')
 		}
-		var {updateProject,id,setActiveView} = this.props
-		updateProject(id,data)
+		var {id,setActiveView} = this.props
+		apiInfo.updateProject(id,data)
 		setActiveView('projects')
-
 	}
 
   	render(){

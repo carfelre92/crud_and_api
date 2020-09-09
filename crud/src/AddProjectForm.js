@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import apiInfo from './apiInfo';
 
 class  AddProjectForm extends Component {
 
@@ -14,9 +15,10 @@ class  AddProjectForm extends Component {
 			description:formData.get('description-input'),
 			type_id: parseInt(formData.get('type-input'))
 		}
+		
 		//destructure
-		var {addProject,setActiveView} = this.props
-		addProject(data)
+		var {setActiveView} = this.props
+		apiInfo.addProject(data)
 		setActiveView('projects')
 
 		// this.props.addProject(data)

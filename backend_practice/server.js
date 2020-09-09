@@ -45,6 +45,13 @@ router.get('/projects/:id', (req, res) => {
   })
 })
 
+router.get('/types/:id/projects', (req, res) => {
+  Project.find({type_id:req.params.id})
+  .then((projects)=>{
+    res.json(projects)
+  })
+})
+
 router.post('/projects', (req, res) => {
 
   var project = new Project()
@@ -88,5 +95,5 @@ router.delete('/projects/:id', (req, res) => {
 app.use('/api', router);
  
 // launch our backend into a port
-const apiPort = 3001;
+const apiPort = 3003
 app.listen(apiPort, () => console.log('Listening on port '+apiPort));
