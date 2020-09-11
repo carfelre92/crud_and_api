@@ -8,22 +8,21 @@ const ProjectSchema = new Schema(
         name: String,
         description: String,
         type_id: Number,
-        user_id:Number,
+        user_id: Number,
+        comments:[],
     },
-    { timestamps: true }
-)
-
-const UserSchema = new Schema(
     {
-        id:Number,
-        user_id:Number,
-        userName:String,
-        email:String,
-        password:String,
-        location:String,
-        profileImage:String,
+        timestamps: true,
+        toJSON: { virtuals: true }
     }
 )
+
+ProjectSchema.virtual('types', {
+    ref: 'Types',
+    localField: 'type_id',
+    foreignField: 'id',
+    justOne: true,
+})
 
 // export the new Schema so we could modify it using Node.js
 module.exports = mongoose.model('Project', ProjectSchema)

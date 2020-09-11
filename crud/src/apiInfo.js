@@ -22,6 +22,10 @@ let apiInfo = {
     updateProject : (id, data) => {
         return axios.put(url + '/projects/' + id, data)
     },
+
+    getUser : (id) => {
+        return axios.get(url + '/users/' + id)
+    },
 }
 
 export default apiInfo;

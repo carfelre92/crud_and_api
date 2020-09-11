@@ -8,21 +8,21 @@ class  AddProjectForm extends Component {
 	}
 	
 	handleFormSubmit = (e) => {
+
 		e.preventDefault()
 		var formData = new FormData(this.addForm)
+		var {currentUser}=this.props;
 		var data = {
 			name:formData.get('name-input'),
 			description:formData.get('description-input'),
-			type_id: parseInt(formData.get('type-input'))
+			type_id: parseInt(formData.get('type-input')),
+			user_id: currentUser.id,
 		}
 		
 		//destructure
 		var {setActiveView} = this.props
 		apiInfo.addProject(data)
 		setActiveView('projects')
-
-		// this.props.addProject(data)
-		// this.props.setActiveView('projects')
 		
 	}
 

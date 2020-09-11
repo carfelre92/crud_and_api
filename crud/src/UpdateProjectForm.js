@@ -17,7 +17,20 @@ class  UpdateProjectForm extends Component {
 		var data = {
 			name:formData.get('name-input'),
 			description:formData.get('description-input'),
-			type_id:formData.get('type-input')
+			type_id:formData.get('type-input'),
+			comments:
+				[
+					// {
+					// 	user_id: 2,
+					// 	comment: 'am i user 2?',
+					// }, {
+					// 	user_id: 3,
+					// 	comment: 'i think i am user 3 dunno',
+					// }, {
+					// 	user_id: 4,
+					// 	comment: 'user 4 adding some comment',
+					// }
+			]
 		}
 		var {id,setActiveView} = this.props
 		apiInfo.updateProject(id,data)
