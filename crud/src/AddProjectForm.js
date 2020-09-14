@@ -20,8 +20,8 @@ class  AddProjectForm extends Component {
 		}
 		
 		//destructure
-		var {setActiveView} = this.props
-		apiInfo.addProject(data)
+		var {setActiveView , listProjects} = this.props
+		apiInfo.addProject(data).then(()=>listProjects())
 		setActiveView('projects')
 		
 	}

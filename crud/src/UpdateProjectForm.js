@@ -5,7 +5,6 @@ class  UpdateProjectForm extends Component {
 
 	constructor(props){
 		super(props);
-
 	}
 
 	update
@@ -18,23 +17,11 @@ class  UpdateProjectForm extends Component {
 			name:formData.get('name-input'),
 			description:formData.get('description-input'),
 			type_id:formData.get('type-input'),
-			comments:
-				[
-					// {
-					// 	user_id: 2,
-					// 	comment: 'am i user 2?',
-					// }, {
-					// 	user_id: 3,
-					// 	comment: 'i think i am user 3 dunno',
-					// }, {
-					// 	user_id: 4,
-					// 	comment: 'user 4 adding some comment',
-					// }
-			]
+			comments:[]
 		}
-		var {id,setActiveView} = this.props
-		apiInfo.updateProject(id,data)
-		setActiveView('projects')
+		var {id,setActiveView,listUserProjects} = this.props
+		apiInfo.updateProject(id,data).then(()=>listUserProjects())
+		setActiveView('userProject')
 	}
 
   	render(){

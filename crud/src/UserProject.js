@@ -1,29 +1,29 @@
 import React, { Component } from 'react'
 import apiInfo from './apiInfo';
 
-class Project extends Component {
+class UserProject extends Component {
 
-	// handleUpdateClick = () => {
-	// 	var { setActiveView, setProjectToUpdate, id } = this.props
-	// 	setProjectToUpdate(id)
-	// 	setActiveView('update-project')
-	// 	console.log(id)
-	// }
+	handleUpdateClick = () => {
+		var { setActiveView, setProjectToUpdate, id } = this.props
+		setProjectToUpdate(id)
+		setActiveView('update-project')
+		console.log(id)
+	}
 
-	// handleTrashClick = () => {
-	// 	var { id, listProjects } = this.props;
-	// 	apiInfo.deleteProject(id).then(()=>listProjects())
-	
-	// }
+	handleTrashClick = () => {
+		var { id, listUserProjects } = this.props;
+		apiInfo.deleteProject(id);
+		listUserProjects();
+	}
 
 	handleCommentSubmit = (e) =>{
 		e.preventDefault();
-		var {comments, listProjects} = this.props
+		var {comments, listUserProjects, currentUser} = this.props
 
 		var formData = new FormData(this.form);
 
 		var newComment = {
-			user_id: 2,
+			user_id: currentUser.id,
 			comment:formData.get('description-input'),
 		}
 		
@@ -32,7 +32,8 @@ class Project extends Component {
 			comments
 		}
 		var {id}=this.props
-		apiInfo.updateProject(id,data).then(()=>listProjects());
+		apiInfo.updateProject(id,data)
+		listUserProjects();
 	}
 
 	render() {
@@ -63,12 +64,12 @@ class Project extends Component {
 					</form>
 					<p>
 						<i className="fas fa-heart"></i>
-						{/* <i onClick={this.handleUpdateClick} className="fas fa-edit"></i>
-						<i onClick={this.handleTrashClick} className="fas fa-trash"></i> */}
+						<i onClick={this.handleUpdateClick} className="fas fa-edit"></i>
+						<i onClick={this.handleTrashClick} className="fas fa-trash"></i>
 					</p>
 				</div>
 			</div>
 		)
 	}
 }
-export default Project
+export default UserProject

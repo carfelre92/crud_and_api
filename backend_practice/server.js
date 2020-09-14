@@ -33,23 +33,6 @@ router.get('/testing', (req, res) => {
   res.send('<h1>Testing is working</h1>')
 })
 
-
-//USER STUFF
-router.get('/users', (req, res) => {
-  User.find()
-.then((users) => {
-    res.json(users)
-  })
-})
-
-router.get('/users/:id', (req, res) => { //List user with projects they have created
-  User.findOne({id:req.params.id})
-  .populate('projects')
-	.then((user) => {
-	    return res.json(user);
-	});
-})
-
 //CRUD for projects
 
 router.get('/projects', (req, res) => { //find all projects
@@ -105,6 +88,22 @@ router.delete('/projects/:id', (req, res) => { //delete the project
       res.json('deleted');
     })
 
+})
+
+//USER STUFF
+router.get('/users', (req, res) => {
+  User.find()
+.then((users) => {
+    res.json(users)
+  })
+})
+
+router.get('/users/:id', (req, res) => { //List user with projects they have created
+  User.findOne({id:req.params.id})
+  .populate('projects')
+	.then((user) => {
+	    return res.json(user);
+	});
 })
 
 
