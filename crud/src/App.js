@@ -14,7 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeView: 'projects',
+      activeView: 'registerUser',
 
       projects: [
         {
@@ -30,16 +30,17 @@ class App extends Component {
         id: '',
         name: '',
         description: '',
-        type_id: 1
+        type_id: '',
       },
 
       currentUser: {
-        id: 1600086127550,
+        id: 1,
         userName: "",
         email: "",
         password: "",
         location: "",
         profileImage: "",
+        
         projects: [
           {
             id: 1,

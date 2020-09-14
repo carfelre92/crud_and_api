@@ -21,6 +21,7 @@ class  RegisterUser extends Component {
 			location: formData.get('location_option'),
 			id:Date.now()+Math.round(Math.random() * (1000000 - 1) + 1),
 			profileImage:'',
+			projects:[],
 		}
 		var {setActiveView , listProjects, setUserId} = this.props
 		console.log(data.id);
