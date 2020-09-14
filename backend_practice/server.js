@@ -109,7 +109,7 @@ router.get('/users/:id', (req, res) => { //List user with projects they have cre
 router.post('/users', (req, res)=>{
 
 	var user = new User()
-	user.id = Date.now()
+	//user.id = Date.now()
 	
 	var data = req.body
 	Object.assign(user,data)
