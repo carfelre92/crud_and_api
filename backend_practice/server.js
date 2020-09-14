@@ -106,6 +106,21 @@ router.get('/users/:id', (req, res) => { //List user with projects they have cre
 	});
 })
 
+router.post('/users', (req, res)=>{
+
+	var user = new User()
+	user.id = Date.now()
+	
+	var data = req.body
+	Object.assign(user,data)
+	
+	user.save()
+	.then((user) => {
+	   res.json(user)
+  })
+
+})
+
 
 //CRUD types
 router.get('/types', (req, res) => {

@@ -6,6 +6,7 @@ import UpdateProjectForm from './UpdateProjectForm';
 import './App.css';
 import apiInfo from './apiInfo';
 import UserProject from './UserProject';
+import RegisterUser from './RegisterUser';
 
 class App extends Component {
 
@@ -13,7 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeView: 'projects',
+      activeView: 'registerUser',
 
       projects: [
         {
@@ -110,6 +111,10 @@ class App extends Component {
     var { currentUser } = this.state
     return (
       <div className="app">
+
+        <View viewName="registerUser" activeView={this.state.activeView} className="color1" >
+          <RegisterUser></RegisterUser>
+        </View>
 
         <View viewName="projects" activeView={this.state.activeView} className="color1" >
 

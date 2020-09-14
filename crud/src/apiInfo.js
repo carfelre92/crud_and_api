@@ -26,6 +26,10 @@ let apiInfo = {
     getUser : (id) => {
         return axios.get(url + '/users/' + id)
     },
+
+    postUser : (data) =>{
+        return axios.post(url+'/users',data)
+    }
 }
 
 export default apiInfo;
