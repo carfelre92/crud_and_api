@@ -14,7 +14,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeView: 'registerUser',
+      activeView: 'projects',
 
       projects: [
         {
@@ -34,7 +34,7 @@ class App extends Component {
       },
 
       currentUser: {
-        id: 3,
+        id: 1600086127550,
         userName: "",
         email: "",
         password: "",
@@ -51,6 +51,10 @@ class App extends Component {
         ],
       }
     }
+  }
+
+  setUserId = (item) => {
+    this.setState({ currentUser:item})
   }
 
   setActiveView = (view) => {
@@ -113,7 +117,7 @@ class App extends Component {
       <div className="app">
 
         <View viewName="registerUser" activeView={this.state.activeView} className="color1" >
-          <RegisterUser></RegisterUser>
+          <RegisterUser setActiveView={this.setActiveView} listProjects={this.listProjects} setUserId={this.setUserId}></RegisterUser>
         </View>
 
         <View viewName="projects" activeView={this.state.activeView} className="color1" >
@@ -154,18 +158,18 @@ class App extends Component {
             {
 
               //shows user profile
-                this.state.currentUser.projects.slice().reverse().map((project) => {
+              this.state.currentUser.projects.slice().reverse().map((project) => {
 
-                  var projectProps = {
-                    ...project,
-                    key: project.id,
-                    listUserProjects: this.listUserProjects,
-                    setActiveView: this.setActiveView,
-                    setProjectToUpdate: this.setProjectToUpdate
+                var projectProps = {
+                  ...project,
+                  key: project.id,
+                  listUserProjects: this.listUserProjects,
+                  setActiveView: this.setActiveView,
+                  setProjectToUpdate: this.setProjectToUpdate
 
-                  }
-                  return (<UserProject currentUser={currentUser} {...projectProps} />)
-              })
+                }
+                return (<UserProject currentUser={currentUser} {...projectProps} />)
+            })
             }
 
 
