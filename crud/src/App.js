@@ -7,6 +7,7 @@ import './App.css';
 import apiInfo from './apiInfo';
 import UserProject from './UserProject';
 import RegisterUser from './RegisterUser';
+import Login from './Login';
 
 class App extends Component {
 
@@ -14,7 +15,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeView: 'registerUser',
+      activeView: 'login',
 
       projects: [
         {
@@ -56,6 +57,16 @@ class App extends Component {
 
   setUserId = (item) => {
     this.setState({ currentUser:item})
+  }
+
+  userAuth = (data) =>{
+    apiInfo.userAuth(data).then(user=>{
+      if(user){
+        console.log('success')
+      } else {
+        console.log('fail')
+      }
+    })
   }
 
   setActiveView = (view) => {
@@ -119,6 +130,10 @@ class App extends Component {
 
         <View viewName="registerUser" activeView={this.state.activeView} className="color1" >
           <RegisterUser setActiveView={this.setActiveView} listProjects={this.listProjects} setUserId={this.setUserId}></RegisterUser>
+        </View>
+
+        <View viewName="login" activeView={this.state.activeView} className="color1" >
+          <Login setActiveView={this.setActiveView} listProjects={this.listProjects} userAuth={this.userAuth}></Login>
         </View>
 
         <View viewName="projects" activeView={this.state.activeView} className="color1" >

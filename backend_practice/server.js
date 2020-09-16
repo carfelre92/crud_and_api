@@ -106,11 +106,16 @@ router.get('/users/:id', (req, res) => { //List user with projects they have cre
 	});
 })
 
-router.post('/users', (req, res)=>{
+router.get('/getUserName/:userName', (req, res) => { //List user with projects they have created
+  User.findOne({userName:req.params.userName})
+  .populate('projects')
+	.then((user) => {
+	    return res.json(user);
+	});
+})
 
+router.post('/users', (req, res)=>{
 	var user = new User()
-	//user.id = Date.now()
-	
 	var data = req.body
 	Object.assign(user,data)
 	
@@ -120,6 +125,25 @@ router.post('/users', (req, res)=>{
   })
 
 })
+
+router.post('/users/userCheck'), (req, res) => {
+  var { userName } = req.body;
+
+  User.findOne(userName)
+    .then((user) => {
+      return res.json(user)
+    })
+}
+
+router.post('/users/userAuth'), (req, res) => {
+  var { userName, password } = req.body;
+  var userAuth = { userName,password }
+
+  User.findOne(userAuth)
+    .then((user) => {
+      return res.json(user)
+    })
+}
 
 
 //CRUD types

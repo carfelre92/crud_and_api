@@ -3,32 +3,40 @@ import axios from 'axios';
 let url = 'http://localhost:3003/api';
 
 let apiInfo = {
-    serverUrl : 'http://localhost:3003/',
+    serverUrl: 'http://localhost:3003/',
 
     //CRUD for projectSchema
 
-    getProjects : () => {
+    getProjects: () => {
         return axios.get(url + '/projects')
     },
 
-    addProject : (data) => {
+    addProject: (data) => {
         return axios.post(url + '/projects', data)
     },
 
-    deleteProject : (id) => {
-        return axios.delete(url + '/projects/' + id)         
+    deleteProject: (id) => {
+        return axios.delete(url + '/projects/' + id)
     },
 
-    updateProject : (id, data) => {
+    updateProject: (id, data) => {
         return axios.put(url + '/projects/' + id, data)
     },
 
-    getUser : (id) => {
+    getUser: (id) => {
         return axios.get(url + '/users/' + id)
     },
 
-    postUser : (data) =>{
-        return axios.post(url+'/users',data)
+    postUser: (data) => {
+        return axios.post(url + '/users', data)
+    },
+
+    userCheck: (data) => {
+        return axios.get(url + '/getUserName/' + data)
+    },
+
+    userAuth: (data) => {
+        return axios.post(url + '/users/userAuth', data)
     }
 }
 
