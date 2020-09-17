@@ -1,4 +1,4 @@
-import React, { Component, useReducer } from 'react';
+import React, { Component } from 'react';
 import View from './View';
 import Project from './Project';
 import AddProjectForm from './AddProjectForm';
@@ -20,8 +20,8 @@ class App extends Component {
       projects: [
         {
           id: 1,
-          name: 'Morning in Waiheke',
-          description: 'Painting by a local artist',
+          name: '',
+          description: '',
           type_id: 1,
           comments: [],
         },
@@ -35,13 +35,14 @@ class App extends Component {
       },
 
       currentUser: {
+        _id: 1,
         id: 1,
         userName: "",
         email: "",
         password: "",
         location: "",
         profileImage: "",
-        
+
         projects: [
           {
             id: 1,
@@ -55,18 +56,18 @@ class App extends Component {
     }
   }
 
-  setUserId = (item) => {
-    this.setState({ currentUser:item})
+  setUserId = (user) => {
+    this.setState({ currentUser: user })
+    return user
   }
 
-  userAuth = (data) =>{
-    apiInfo.userAuth(data).then(user=>{
-      if(user){
-        console.log('success')
-      } else {
-        console.log('fail')
-      }
-    })
+  userLogin = (data) => {
+    apiInfo.userAuth(data)
+      .then(res => {
+        var user = res.data
+        console.log(res.data)
+        return user
+      })
   }
 
   setActiveView = (view) => {
@@ -103,24 +104,47 @@ class App extends Component {
   activeViewListProject = (view) => {
     apiInfo.getProjects().then(res => {
       this.setState({ projects: res.data })
-    }).then(()=>this.setActiveView(view))
+    }).then(() => this.setActiveView(view))
   }
 
   activeViewListUserProject = (view) => {
     apiInfo.getUser(this.state.currentUser.id).then(res => {
       this.setState({ currentUser: res.data })
-    }).then(()=>this.setActiveView(view))
+    }).then(() => this.setActiveView(view))
   }
 
+  activeViewLogout = (view) => {
+    this.setState({
+      currentUser: {
+        _id: 1,
+        id: 1,
+        userName: "",
+        email: "",
+        password: "",
+        location: "",
+        profileImage: "",
 
+        projects: [
+          {
+            id: 1,
+            name: '',
+            description: '',
+            type_id: 1,
+            comments: []
+          },
+        ],
+      }, projects:[]
+    })
+    this.setActiveView(view)
+  }
 
   deleteProject = () => {
     apiInfo.deleteProject()
   }
 
   componentDidMount() {
-    this.listUserProjects();
-    this.listProjects();
+    //this.listUserProjects();
+    //this.listProjects();
   }
 
   render() {
@@ -133,7 +157,7 @@ class App extends Component {
         </View>
 
         <View viewName="login" activeView={this.state.activeView} className="color1" >
-          <Login setActiveView={this.setActiveView} listProjects={this.listProjects} userAuth={this.userAuth}></Login>
+          <Login setActiveView={this.setActiveView} listProjects={this.listProjects} setUserId={this.setUserId} userLogin={this.userLogin} listUserProjects={this.listUserProjects}></Login>
         </View>
 
         <View viewName="projects" activeView={this.state.activeView} className="color1" >
@@ -156,7 +180,7 @@ class App extends Component {
                   setActiveView: this.setActiveView,
                   setProjectToUpdate: this.setProjectToUpdate
                 }
-                return (<Project {...projectProps} />)
+                return (<Project {...projectProps} currentUser={currentUser} />)
               })
             }
           </div>
@@ -185,7 +209,7 @@ class App extends Component {
 
                 }
                 return (<UserProject currentUser={currentUser} {...projectProps} />)
-            })
+              })
             }
 
 
@@ -201,7 +225,7 @@ class App extends Component {
           </div>
           <div className="main">
             <h3>Add a project</h3>
-            <AddProjectForm currentUser={currentUser} addProject={this.addProject} setActiveView={this.setActiveView} listProjects={this.listProjects}/>
+            <AddProjectForm currentUser={currentUser} addProject={this.addProject} setActiveView={this.setActiveView} listProjects={this.listProjects} />
           </div>
 
         </View>
@@ -213,7 +237,7 @@ class App extends Component {
           </div>
           <div className="main">
             <h3>Update a project</h3>
-            <UpdateProjectForm {...this.state.projectToUpdate} setActiveView={this.setActiveView} listUserProjects={this.listUserProjects}/>
+            <UpdateProjectForm {...this.state.projectToUpdate} setActiveView={this.setActiveView} listUserProjects={this.listUserProjects} />
           </div>
 
         </View>
@@ -228,7 +252,8 @@ class App extends Component {
             <ul className="menu">
               <li><a onClick={() => this.activeViewListProject('projects')} className="color1" href="#">Projects</a></li>
               <li><a onClick={() => this.setActiveView('add-project')} className="color2" href="#">Add a project</a></li>
-              <li><a onClick={() => this.activeViewListUserProject('userProject')} className="color2" href="#">view user project</a></li>
+              <li><a onClick={() => this.activeViewListUserProject('userProject')} className="color1" href="#">view user project</a></li>
+              <li><a onClick={() => this.activeViewLogout('login')} className="color1" href="#">logout</a></li>
 
             </ul>
 

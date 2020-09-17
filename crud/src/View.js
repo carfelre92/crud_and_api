@@ -8,7 +8,7 @@ class  View extends Component {
 
 	    var newClassName = 'view '+className
 
-	    return (viewName == activeView) ? (
+	    return (viewName === activeView) ? (
 
 		      	<div className={newClassName}>
 		        	{children}

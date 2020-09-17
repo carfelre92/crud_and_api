@@ -12,6 +12,7 @@ class RegisterUser extends Component {
 		e.preventDefault()
 		var formData = new FormData(this.addForm)
 		var data = {
+			_id:'',
 			userName: formData.get('userName'),
 			email: formData.get('email'),
 			password: formData.get('password'),
@@ -21,8 +22,7 @@ class RegisterUser extends Component {
 			projects: [],
 		}
 		var { setActiveView, listProjects, setUserId } = this.props
-		console.log(data.id);
-		console.log(data);
+		console.log(data)
 		setUserId(data)
 
 		apiInfo.postUser(data).then(() => listProjects())

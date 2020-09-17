@@ -10,6 +10,7 @@ var mongoose = require('mongoose')
 var Project = require('./project-model')
 var Type = require('./type-model')
 var User = require('./user-model')
+var UserCheck = require('./userCheck-model')
 
 //setup express server
 var app = express()
@@ -69,15 +70,15 @@ router.post('/projects', (req, res) => { //post new project
 
 router.put('/projects/:id', (req, res) => {
 
-	Project.findOne({id:req.params.id})
-	.then((project) => {
-		var data = req.body
-		Object.assign(project,data)
-		return project.save()	
-	})
-	.then((project) => {
-		 res.json(project)
-	})
+  Project.findOne({ id: req.params.id })
+    .then((project) => {
+      var data = req.body
+      Object.assign(project, data)
+      return project.save()
+    })
+    .then((project) => {
+      res.json(project)
+    })
 
 })
 
@@ -93,51 +94,41 @@ router.delete('/projects/:id', (req, res) => { //delete the project
 //USER STUFF
 router.get('/users', (req, res) => {
   User.find()
-.then((users) => {
-    res.json(users)
-  })
+    .then((users) => {
+      res.json(users)
+    })
 })
 
 router.get('/users/:id', (req, res) => { //List user with projects they have created
-  User.findOne({id:req.params.id})
-  .populate('projects')
-	.then((user) => {
-	    return res.json(user);
-	});
+  User.findOne({ id: req.params.id })
+    .populate('projects')
+    .then((user) => {
+      return res.json(user);
+    });
 })
 
 router.get('/getUserName/:userName', (req, res) => { //List user with projects they have created
-  User.findOne({userName:req.params.userName})
-  .populate('projects')
-	.then((user) => {
-	    return res.json(user);
-	});
-})
-
-router.post('/users', (req, res)=>{
-	var user = new User()
-	var data = req.body
-	Object.assign(user,data)
-	
-	user.save()
-	.then((user) => {
-	   res.json(user)
-  })
-
-})
-
-router.post('/users/userCheck'), (req, res) => {
-  var { userName } = req.body;
-
-  User.findOne(userName)
+  User.findOne({ userName: req.params.userName })
     .then((user) => {
-      return res.json(user)
+      return res.json(user);
+    });
+})
+
+router.post('/users', (req, res) => {
+  var user = new User()
+  var data = req.body
+  Object.assign(user, data)
+
+  user.save()
+    .then((user) => {
+      res.json(user)
     })
-}
+
+})
 
 router.post('/users/userAuth'), (req, res) => {
   var { userName, password } = req.body;
-  var userAuth = { userName,password }
+  var userAuth = { userName, password }
 
   User.findOne(userAuth)
     .then((user) => {
@@ -149,19 +140,19 @@ router.post('/users/userAuth'), (req, res) => {
 //CRUD types
 router.get('/types', (req, res) => {
 
-	Type.find()
-	.then((types) => {
-	    return res.json(types)
-	})
+  Type.find()
+    .then((types) => {
+      return res.json(types)
+    })
 
 })
 
-router.get('/types/:id', (req, res) => { 
-	Type.findOne({id:req.params.id})
-	.populate('projects')
-	.then((type) => {
-	    return res.json(type)
-	})
+router.get('/types/:id', (req, res) => {
+  Type.findOne({ id: req.params.id })
+    .populate('projects')
+    .then((type) => {
+      return res.json(type)
+    })
 })
 
 //use server to serve up routes

@@ -36,7 +36,7 @@ let apiInfo = {
     },
 
     userAuth: (data) => {
-        return axios.post(url + '/users/userAuth', data)
+        return axios.post(url + '/userAuth', data)
     }
 }
 

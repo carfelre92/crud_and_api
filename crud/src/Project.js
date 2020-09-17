@@ -18,12 +18,12 @@ class Project extends Component {
 
 	handleCommentSubmit = (e) =>{
 		e.preventDefault();
-		var {comments, listProjects} = this.props
+		var {comments, listProjects, currentUser} = this.props
 
 		var formData = new FormData(this.form);
 
 		var newComment = {
-			user_id: 2,
+			user_id: currentUser.id,
 			comment:formData.get('description-input'),
 		}
 		
