@@ -9,6 +9,8 @@ const PostSchema = new Schema(
         userPhoto: String,
         title: String,
         description: String,
+        type_id: Number,
+        user_id: Number,
         comments:[],
     },
     {
