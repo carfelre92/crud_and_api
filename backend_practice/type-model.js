@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var TypeSchema = new Schema(
   {
     id: Number,
-    name: String,
+    location: String,
   },
   { 
     timestamps: true,
@@ -13,8 +13,8 @@ var TypeSchema = new Schema(
   }
 )
 
-TypeSchema.virtual('projects', {
-  ref: 'Project', // The model to use
+TypeSchema.virtual('posts', {
+  ref: 'Post', // The model to use
   localField: 'id', 
   foreignField: 'type_id', 
   justOne: false,

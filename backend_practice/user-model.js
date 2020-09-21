@@ -9,7 +9,6 @@ const UserSchema = new Schema(
         password: String,
         location: String,
         profileImage: String,
-
     },
     {
         timestamps: true,
@@ -17,8 +16,8 @@ const UserSchema = new Schema(
     }
 )
 
-UserSchema.virtual('projects', {
-    ref: 'Project', // The model to use
+UserSchema.virtual('posts', {
+    ref: 'Post', // The model to use
     localField: 'id', //field to compare with
     foreignField: 'user_id', //compare localField with foreignField and bring all projects with matching id-user_id
     justOne: false,

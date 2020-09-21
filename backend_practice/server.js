@@ -6,8 +6,8 @@ var logger = require('morgan')
 var cors = require('cors')
 var mongoose = require('mongoose')
 
-//model imported from project-model.js
-var Project = require('./project-model')
+//model imported
+var Post = require('./post-model')
 var Type = require('./type-model')
 var User = require('./user-model')
 
@@ -21,7 +21,7 @@ app.use(logger('dev'))
 
 
 
-var connectionString = 'mongodb://admin:pass123@cluster0-shard-00-00.5e41l.mongodb.net:27017,cluster0-shard-00-01.5e41l.mongodb.net:27017,cluster0-shard-00-02.5e41l.mongodb.net:27017/demo_test?ssl=true&replicaSet=atlas-qqjg1e-shard-0&authSource=admin&retryWrites=true&w=majority';
+var connectionString = 'mongodb://admin:admin@cluster0-shard-00-00.ovuvz.mongodb.net:27017,cluster0-shard-00-01.ovuvz.mongodb.net:27017,cluster0-shard-00-02.ovuvz.mongodb.net:27017/zip?ssl=true&replicaSet=atlas-12flzp-shard-0&authSource=admin&retryWrites=true&w=majority';
 mongoose.connect(connectionString, { useNewUrlParser: true })
 var db = mongoose.connection
 db.once('open', () => console.log('Database connected'))
@@ -29,61 +29,61 @@ db.on('error', () => console.log('Database error'))
 //setup routes
 var router = express.Router();
 
-router.get('/testing', (req, res) => {
-  res.send('<h1>Testing is working</h1>')
-})
+// router.get('/testing', (req, res) => {
+//   res.send('<h1>Testing is working</h1>')
+// })
 
-//CRUD for projects
+//CRUD for posts
 
-router.get('/projects', (req, res) => { //find all projects
-  Project.find()
+router.get('/posts', (req, res) => { //find all posts
+  Post.find()
     .populate('types')
-    .then((projects) => {
-      res.json(projects)
+    .then((posts) => {
+      res.json(posts)
     })
 
 })
 
-router.get('/projects/:id', (req, res) => { //find project with specific id
-  Project.findOne({ id: req.params.id })
-    .then((project) => {
-      res.json(project)
+router.get('/posts/:id', (req, res) => { //find post with specific id
+  Post.findOne({ id: req.params.id })
+    .then((post) => {
+      res.json(post)
     })
 })
 
-router.post('/projects', (req, res) => { //post new project
+router.post('/posts', (req, res) => { //post new post
 
-  var project = new Project()
-  project.id = Date.now()
+  var post = new Post()
+  post.id = Date.now()
 
   var data = req.body
   console.log(data)
-  Object.assign(project, data)
+  Object.assign(post, data)
 
-  project.save()
-    .then((project) => {
-      res.json(project)
+  post.save()
+    .then((post) => {
+      res.json(post)
     })
 })
 
 
-router.put('/projects/:id', (req, res) => {
+router.put('/posts/:id', (req, res) => {
 
-	Project.findOne({id:req.params.id})
-	.then((project) => {
+	Post.findOne({id:req.params.id})
+	.then((post) => {
 		var data = req.body
-		Object.assign(project,data)
-		return project.save()	
+		Object.assign(post,data)
+		return post.save()	
 	})
-	.then((project) => {
-		 res.json(project)
+	.then((post) => {
+		 res.json(post)
 	})
 
 })
 
-router.delete('/projects/:id', (req, res) => { //delete the project
+router.delete('/posts/:id', (req, res) => { //delete the post
 
-  Project.deleteOne({ id: req.params.id })
+  Post.deleteOne({ id: req.params.id })
     .then(() => {
       res.json('deleted');
     })
@@ -98,17 +98,17 @@ router.get('/users', (req, res) => {
   })
 })
 
-router.get('/users/:id', (req, res) => { //List user with projects they have created
+router.get('/users/:id', (req, res) => { //List user with posts they have created
   User.findOne({id:req.params.id})
-  .populate('projects')
+  .populate('posts')
 	.then((user) => {
 	    return res.json(user);
 	});
 })
 
-router.get('/getUserName/:userName', (req, res) => { //List user with projects they have created
+router.get('/getUserName/:userName', (req, res) => { //List user with posts they have created
   User.findOne({userName:req.params.userName})
-  .populate('projects')
+  .populate('posts')
 	.then((user) => {
 	    return res.json(user);
 	});
@@ -158,7 +158,7 @@ router.get('/types', (req, res) => {
 
 router.get('/types/:id', (req, res) => { 
 	Type.findOne({id:req.params.id})
-	.populate('projects')
+	.populate('posts')
 	.then((type) => {
 	    return res.json(type)
 	})
@@ -168,5 +168,5 @@ router.get('/types/:id', (req, res) => {
 app.use('/api', router);
 
 // launch our backend into a port
-const apiPort = 3003
+const apiPort = 4000
 app.listen(apiPort, () => console.log('Listening on port ' + apiPort));
