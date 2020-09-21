@@ -12,7 +12,6 @@ class RegisterUser extends Component {
 		e.preventDefault()
 		var formData = new FormData(this.addForm)
 		var data = {
-			_id:'',
 			userName: formData.get('userName'),
 			email: formData.get('email'),
 			password: formData.get('password'),
