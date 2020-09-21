@@ -37,12 +37,22 @@ var router = express.Router();
 
 router.get('/posts', (req, res) => { //find all posts
   Post.find()
-    .populate('types')
+    .populate('type')
+    .populate('user')
     .then((posts) => {
       res.json(posts)
     })
 
 })
+
+// router.get('/posts', (req, res) => {
+//   Post.find()
+//     .populate('user')
+//     .then((posts) => {
+//       res.json(posts)
+//     })
+
+// })
 
 router.get('/posts/:id', (req, res) => { //find post with specific id
   Post.findOne({ id: req.params.id })
@@ -93,7 +103,7 @@ router.delete('/posts/:id', (req, res) => { //delete the post
 //USER STUFF
 router.get('/users', (req, res) => {
   User.find()
-.then((users) => {
+  .then((users) => {
     res.json(users)
   })
 })

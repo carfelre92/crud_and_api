@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
-const UserSchema = new Schema(
+var UserSchema = new Schema(
     {
         id: Number,
         userName: String,
@@ -23,4 +23,4 @@ UserSchema.virtual('posts', {
     justOne: false,
   })
 
-  module.exports = mongoose.model('User',UserSchema)
+module.exports = mongoose.model('User',UserSchema)

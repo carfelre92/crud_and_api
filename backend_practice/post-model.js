@@ -19,9 +19,16 @@ const PostSchema = new Schema(
     }
 )
 
-PostSchema.virtual('types', {
+PostSchema.virtual('type', {
     ref: 'Types',
     localField: 'type_id',
+    foreignField: 'id',
+    justOne: true,
+})
+
+PostSchema.virtual('user', {
+    ref: 'User',
+    localField: 'user_id',
     foreignField: 'id',
     justOne: true,
 })
