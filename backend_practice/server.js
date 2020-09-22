@@ -5,6 +5,7 @@ var bodyParser = require('body-parser')
 var logger = require('morgan')
 var cors = require('cors')
 var mongoose = require('mongoose')
+var fileUpload = require('express-fileupload')
 
 //model imported
 var Post = require('./post-model')
@@ -17,8 +18,11 @@ app.use(cors())
 app.use(bodyParser.json()) // for parsing application/json
 
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(logger('dev'))
 
+
+app.use(fileUpload())
+
+app.use(logger('dev'))
 
 
 var connectionString = 'mongodb://admin:admin@cluster0-shard-00-00.ovuvz.mongodb.net:27017,cluster0-shard-00-01.ovuvz.mongodb.net:27017,cluster0-shard-00-02.ovuvz.mongodb.net:27017/zip?ssl=true&replicaSet=atlas-12flzp-shard-0&authSource=admin&retryWrites=true&w=majority';
@@ -29,6 +33,7 @@ db.on('error', () => console.log('Database error'))
 //setup routes
 var router = express.Router();
 
+app.use(express.static('public'))
 // router.get('/testing', (req, res) => {
 //   res.send('<h1>Testing is working</h1>')
 // })
@@ -116,8 +121,8 @@ router.get('/users/:id', (req, res) => { //List user with posts they have create
 	});
 })
 
-router.get('/getUserName/:userName', (req, res) => { //List user with posts they have created
-  User.findOne({userName:req.params.userName})
+router.get('/getEmail/:email', (req, res) => { //List user with posts they have created
+  User.findOne({email:req.params.email})
   .populate('posts')
 	.then((user) => {
 	    return res.json(user);
@@ -172,6 +177,21 @@ router.get('/types/:id', (req, res) => {
 	.then((type) => {
 	    return res.json(type)
 	})
+})
+
+//upload
+router.post('/upload', (req,res) => {
+
+  console.log(req.files)
+  var files = Object.values(req.files)
+
+  var uploadedFile = files[0]
+
+  var newFileName = Date.now() + uploadedFile.name
+
+  uploadedFile.mv('public/'+ newFileName, function(){
+    res.send(newFileName)
+  })
 })
 
 //use server to serve up routes

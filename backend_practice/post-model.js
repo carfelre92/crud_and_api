@@ -6,6 +6,7 @@ const PostSchema = new Schema(
     {
         id: Number,
         postImage: String,
+        postImageURL: String,
         userPhoto: String,
         title: String,
         description: String,
