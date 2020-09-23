@@ -24,6 +24,7 @@ class UserProject extends Component {
 
 		var newComment = {
 			user_id: currentUser.id,
+			userName: currentUser.userName,
 			comment:formData.get('description-input'),
 		}
 		
