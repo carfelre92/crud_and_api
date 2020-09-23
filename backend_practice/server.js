@@ -107,7 +107,14 @@ router.get('/users/:id', (req, res) => { //List user with posts they have create
     });
 })
 
-router.get('/getUserName/:userName', (req, res) => { //List user with posts they have created
+router.get('/getUsername/:id', (req, res) => {
+  User.findOne({ id: req.params.id })
+    .then((user) => {
+      return res.json(user.userName);
+    });
+})
+
+router.get('/checkUserName/:userName', (req, res) => {
   User.findOne({ userName: req.params.userName })
     .then((user) => {
       return res.json(user);

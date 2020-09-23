@@ -7,7 +7,6 @@ class  UpdateProjectForm extends Component {
 		super(props);
 	}
 
-	update
 
 	handleFormSubmit = (e) => {
 		e.preventDefault();
