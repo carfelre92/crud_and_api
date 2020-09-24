@@ -96,6 +96,34 @@ router.put('/posts/:id', (req, res) => {
 
 })
 
+router.post('/posts/:id/likes/:userid', (req, res) => {
+
+	Post.findOne({id:req.params.id})
+	.then((post) => {
+    var userid = req.params.userid
+    post.likes.addToSet(userid)
+		return post.save()	
+	})
+	.then((post) => {
+		 res.json(post)
+	})
+
+})
+
+router.delete('/posts/:id/likes/:userid', (req, res) => {
+
+	Post.findOne({id:req.params.id})
+	.then((post) => {
+    var userid = req.params.userid
+    post.likes.pull(userid)
+		return post.save()	
+	})
+	.then((post) => {
+		 res.json(post)
+	})
+
+})
+
 router.delete('/posts/:id', (req, res) => { //delete the post
 
   Post.deleteOne({ id: req.params.id })
@@ -115,7 +143,11 @@ router.get('/users', (req, res) => {
 
 router.get('/users/:id', (req, res) => { //List user with posts they have created
   User.findOne({id:req.params.id})
-  .populate('posts')
+  // .populate('posts')
+  .populate({ 		
+    path:'posts',	//deep population
+    populate:'type'
+  })
 	.then((user) => {
 	    return res.json(user);
 	});
@@ -138,6 +170,20 @@ router.post('/users', (req, res)=>{
 	.then((user) => {
 	   res.json(user)
   })
+
+})
+
+router.put('/users/:id', (req, res) => {
+
+	User.findOne({id:req.params.id})
+	.then((user) => {
+		var data = req.body
+		Object.assign(user,data)
+		return user.save()	
+	})
+	.then((user) => {
+		 res.json(user)
+	})
 
 })
 

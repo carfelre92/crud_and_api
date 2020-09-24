@@ -9,6 +9,7 @@ var UserSchema = new Schema(
         password: String,
         location: String,
         profileImage: String,
+        profileImageURL: String,
     },
     {
         timestamps: true,

@@ -12,6 +12,7 @@ const PostSchema = new Schema(
         description: String,
         type_id: Number,
         user_id: Number,
+        likes: [Number],
         comments:[],
     },
     {
