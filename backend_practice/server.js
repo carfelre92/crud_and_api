@@ -153,7 +153,7 @@ router.get('/users/:id', (req, res) => { //List user with posts they have create
 	});
 })
 
-router.get('/getEmail/:email', (req, res) => { //List user with posts they have created
+router.get('/getEmail/:email', (req, res) => {
   User.findOne({email:req.params.email})
   .populate('posts')
 	.then((user) => {
@@ -174,16 +174,29 @@ router.post('/users', (req, res)=>{
 })
 
 router.put('/users/:id', (req, res) => {
-
+  console.log('updating')
 	User.findOne({id:req.params.id})
 	.then((user) => {
 		var data = req.body
 		Object.assign(user,data)
 		return user.save()	
-	})
-	.then((user) => {
-		 res.json(user)
-	})
+  })
+  .then(user=>{
+
+    return User.findOne({id:req.params.id})
+    // .populate('posts')
+    .populate({ 		
+      path:'posts',	//deep population
+      populate:'type'
+    })
+    
+  })
+  .then((user) => {
+    // console.log('there')
+    // console.log(user)
+    res.json(user)
+  })
+
 
 })
 
@@ -219,7 +232,10 @@ router.get('/types', (req, res) => {
 
 router.get('/types/:id', (req, res) => { 
 	Type.findOne({id:req.params.id})
-	.populate('posts')
+	.populate({ 		
+		path:'posts',	//deep population
+		populate:'type'
+	})
 	.then((type) => {
 	    return res.json(type)
 	})
@@ -239,6 +255,7 @@ router.post('/upload', (req,res) => {
     res.send(newFileName)
   })
 })
+
 
 //use server to serve up routes
 app.use('/api', router);
