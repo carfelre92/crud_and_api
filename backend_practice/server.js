@@ -70,6 +70,7 @@ router.post('/posts', (req, res) => { //post new post
 
   var post = new Post()
   post.id = Date.now()
+  post.likes = []
 
   var data = req.body
   console.log(data)
